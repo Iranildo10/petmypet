@@ -1,8 +1,7 @@
-﻿@model LoginViewModel
-
+﻿@model RegisterViewModel
 
 @{
-    ViewData["Title"] = "Entrar";
+    ViewData["Title"] = "Registrar";
 }
 
 <style>
@@ -13,7 +12,7 @@
         padding: 0;
     }
 
-    .login-container {
+    .register-container {
         max-width: 400px;
         margin: 5% auto;
         background-color: #FFFFFF;
@@ -22,18 +21,18 @@
         padding: 20px;
     }
 
-    .login-header {
+    .register-header {
         text-align: center;
         margin-bottom: 20px;
     }
 
-        .login-header img {
+        .register-header img {
             max-width: 150px; /* Ajusta o tamanho do logo */
             height: auto;
             margin-bottom: 10px;
         }
 
-        .login-header h1 {
+        .register-header h1 {
             font-size: 24px;
             color: #000000;
             margin: 0;
@@ -52,7 +51,7 @@
         margin-bottom: 15px;
     }
 
-    .btn-login {
+    .btn-register {
         background-color: #A7D7C5;
         color: #FFFFFF;
         font-weight: bold;
@@ -63,7 +62,7 @@
         transition: all 0.3s ease;
     }
 
-        .btn-login:hover {
+        .btn-register:hover {
             background-color: #8AC4B3;
         }
 
@@ -76,47 +75,67 @@
         margin-top: 15px;
     }
 
-    .forgot-password {
+    .already-registered {
         text-align: center;
         margin-top: 10px;
     }
 
-        .forgot-password a {
+        .already-registered a {
             color: #000000;
             text-decoration: none;
         }
 
-            .forgot-password a:hover {
+            .already-registered a:hover {
                 text-decoration: underline;
             }
 
+    /* Tornando o layout responsivo */
+    @@media (max-width: 768px) {
+        .register-container {
+            margin: 10% auto;
+            padding: 15px;
+        }
+    }
 </style>
 
 <body>
-    <div class="login-container">
-        <div class="login-header">
+    <div class="register-container">
+        <div class="register-header">
             <!-- Adicionando o logo -->
             <img src="~/images/logo.png" alt="Pet My Pet Logo" style="border-radius: 0.5rem">
+            <h1>Registrar</h1>
 
         </div>
-        <form asp-action="Login" method="post">
-            <!-- Campo oculto para returnUrl -->
-            <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
-
+        <form asp-action="Register" method="post">
             <div class="mb-3">
-                <label asp-for="Phone" class="form-label">Número de Telefone</label>
-                <input asp-for="Phone" class="form-control" placeholder="Digite seu número de telefone" maxlength="11" oninput="mascaraTelefone(this)" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
+                <label asp-for="Nome" class="form-label">Nome</label>
+                <input asp-for="Nome" class="form-control" placeholder="Digite seu nome completo" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Endereco" class="form-label">Endereço</label>
+                <input asp-for="Endereco" class="form-control" placeholder="Digite seu endereço" />
+                <span asp-validation-for="Endereco" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Bairro" class="form-label">Bairro</label>
+                <input asp-for="Bairro" class="form-control" placeholder="Digite seu bairro" />
+                <span asp-validation-for="Bairro" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Telefone" class="form-label">Telefone</label>
+                <input asp-for="Telefone" id="telefone" class="form-control" placeholder="Digite seu número de telefone" maxlength="11" oninput="mascaraTelefone(this)" />
+                <span asp-validation-for="Telefone" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Password" class="form-label">Senha</label>
-                <input asp-for="Password" class="form-control" placeholder="Digite sua senha" />
+                <input asp-for="Password" class="form-control" placeholder="Crie uma senha" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-login">Entrar</button>
+            <button type="submit" class="btn btn-register">Registrar</button>
         </form>
-        <div class="forgot-password">
-            <a asp-area="" asp-controller="Account" asp-action="Register" asp-route-returnUrl="@($"{Context.Request.Path}{Context.Request.QueryString}")">Não possúi uma conta?</a>
+        <div class="already-registered">
+            <a asp-area="" asp-controller="Account" asp-action="Login">Já possui uma conta? Faça login</a>
         </div>
     </div>
 </body>
@@ -138,3 +157,5 @@
     }
 
 </script>
+
+

@@ -20,3 +20,10 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+header img {
+    width: 40px; /* Ajusta o tamanho do logo */
+    height: 40px;
+    height: auto;
+    margin-bottom: 10px;
+}

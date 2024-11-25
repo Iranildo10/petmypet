@@ -1,4 +1,11 @@
 ﻿@using petmypet
 @using petmypet.Models
 @using petmypet.ViewModels
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+@inject UserManager<ApplicationUser> UserManager
+
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

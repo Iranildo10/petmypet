@@ -9,6 +9,11 @@ namespace petmypet.Context
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {
+
         }
+
+        public DbSet<Pet> Pets { get; set; }
+        public DbSet<Raca> Racas { get; set; }
+        public DbSet<TipoAnimal> TiposAnimais { get; set; }
     }
 }

@@ -34,21 +34,27 @@ namespace petmypet.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string Phone, string Password, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/"); // URL padrão caso returnUrl seja nulo
 
+            // Verifique se o modelo está válido
+            if (!ModelState.IsValid)
+            {
+                return View(model); // Retorne a view com os erros de validação
+            }
+
             // Procure o usuário pelo número de telefone
-            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == Phone);
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == model.Phone);
 
             if (user == null)
             {
                 _notyf.Error("Usuário não cadastrado.");
-                return View(new LoginViewModel { ReturnUrl = returnUrl });
+                return View(model); // Retorna a view com a mensagem de erro
             }
 
             // Tente fazer o login com o usuário encontrado
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, Password, isPersistent: false, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, isPersistent: false, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
@@ -67,46 +73,66 @@ namespace petmypet.Controllers
 
             // Se falhar, mostre o erro
             _notyf.Error("Número de telefone ou senha inválidos.");
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
+            return View(model); // Retorna a view com a mensagem de erro
         }
 
 
+
         [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null)
+        public IActionResult Register()
         {
 
-            var loginViewModel = new LoginViewModel
-            {
-                ReturnUrl = returnUrl
-            };
-            return View(loginViewModel);
+            var registerViewModel = new RegisterViewModel();
+            return View(registerViewModel);
 
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(LoginViewModel registroVM)
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    var user = new IdentityUser { UserName = registroVM.UserName };
-            //    var result = await _userManager.CreateAsync(user, registroVM.Password);
+            if (ModelState.IsValid)
+            {
+                // Criar o novo usuário com os dados do modelo
+                var user = new ApplicationUser
+                {
+                    UserName = model.Telefone,
+                    PhoneNumber = model.Telefone,
+                    Nome = model.Nome,
+                    Endereco = model.Endereco,
+                    Bairro = model.Bairro,
+                    Ativo = true
+                };
 
-            //    if (result.Succeeded)
-            //    {
-            //        await _userManager.AddToRoleAsync(user, "Member");
-            //        return RedirectToAction("Login", "Account");
-            //    }
-            //    else
-            //    {
-            //        this.ModelState.AddModelError("Registro", "Falha ao registrar o usuário");
-            //        //registroVM.ErrorMessage = "Falha ao registrar usuário!";
-            //    }
+                // Criar o usuário no banco de dados
+                var result = await _userManager.CreateAsync(user, model.Password);
 
-            //}
+                if (result.Succeeded)
+                {
+                    // Adicionar o usuário à role "Member"
+                    var roleResult = await _userManager.AddToRoleAsync(user, "Member");
 
-            return View(registroVM);
+                    if (!roleResult.Succeeded)
+                    {
+                        _notyf.Error("Erro ao cadastrar usuário.");
+                        return View(model); // Retorna a view com os erros, se houverem
+                    }
+
+                    // Fazer login do usuário
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    return RedirectToAction("Index", "Home");
+                }
+
+                _notyf.Error("Erro ao cadastrar usuário.");
+
+            }
+
+            _notyf.Warning("Preencha os campos corretamente.");
+
+            return View(model);
         }
+
 
         public async Task<IActionResult> Logout()
         {
