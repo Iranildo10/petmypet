@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using petmypet.Context;
+using petmypet.Models;
+using petmypet.Services;
 using ReflectionIT.Mvc.Paging;
 
 
@@ -28,7 +30,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Configuração customizada: Identity
 // ============================================
 // Adiciona os serviços de autenticação e autorização usando Identity com suporte a roles e tokens
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
@@ -59,7 +61,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 //builder.Services.AddTransient<IVendaRepository, VendaRepository>();
 //builder.Services.AddScoped<ICarrinhoCompraRepository, CarrinhoCompraRepository>();
 //builder.Services.AddScoped<ICrediarioRepository, CrediarioRepository>();
-//builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>(); // Serviço para criar perfis de usuário e roles iniciais
+builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>(); // Serviço para criar perfis de usuário e roles iniciais
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -68,7 +70,7 @@ builder.Services.AddNotyf(config =>
 {
     config.DurationInSeconds = 3;
     config.IsDismissable = true;
-    config.Position = NotyfPosition.BottomRight;
+    config.Position = NotyfPosition.TopRight; // Define a posição no topo à direita
 });
 
 // ============================================
@@ -142,7 +144,7 @@ app.UseRouting();
 // Configuração customizada: Seed de usuários e roles
 // ============================================
 // Inicializa as roles de usuário (Admin, etc.) e cria usuários iniciais
-//CriarPerfisUsuarios(app);
+CriarPerfisUsuarios(app);
 
 // ============================================
 // Configuração customizada: Sessão
@@ -171,15 +173,15 @@ app.MapControllerRoute(
 
 app.Run();
 
-//void CriarPerfisUsuarios(WebApplication app)
-//{
-//    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-//    using (var scope = scopedFactory.CreateScope())
-//    {
-//        var service = scope.ServiceProvider.GetService<ISeedUserRoleInitial>();
-//        service.SeedRoles();
-//        service.SeedUsers();
+void CriarPerfisUsuarios(WebApplication app)
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+    using (var scope = scopedFactory.CreateScope())
+    {
+        var service = scope.ServiceProvider.GetService<ISeedUserRoleInitial>();
+        service.SeedRoles();
+        service.SeedUsers();
 
-//    }
-//}
+    }
+}
 

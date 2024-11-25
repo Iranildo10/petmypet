@@ -1,0 +1,120 @@
+﻿@model LoginViewModel
+
+
+@{
+    ViewData["Title"] = "Entrar";
+}
+
+<style>
+    body {
+        background-color: #FF91C1;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .login-container {
+        max-width: 400px;
+        margin: 5% auto;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+        .login-header img {
+            max-width: 150px; /* Ajusta o tamanho do logo */
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .login-header h1 {
+            font-size: 24px;
+            color: #000000;
+            margin: 0;
+        }
+
+    .form-label {
+        color: #000000;
+        font-weight: bold;
+    }
+
+    .form-control {
+        background-color: #F5F5F5;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    .btn-login {
+        background-color: #A7D7C5;
+        color: #FFFFFF;
+        font-weight: bold;
+        border: none;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-login:hover {
+            background-color: #8AC4B3;
+        }
+
+    .alert-warning {
+        background-color: #FFE29A;
+        color: #000000;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 15px;
+    }
+
+    .forgot-password {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+        .forgot-password a {
+            color: #000000;
+            text-decoration: none;
+        }
+
+            .forgot-password a:hover {
+                text-decoration: underline;
+            }
+
+</style>
+
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <!-- Adicionando o logo -->
+            <img src="~/images/logo.png" alt="Pet My Pet Logo" style="border-radius: 0.5rem">
+
+        </div>
+        <form asp-action="Login" method="post">
+            <!-- Campo oculto para returnUrl -->
+            <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+
+            <div class="mb-3">
+                <label for="phone" class="form-label">Número de Telefone</label>
+                <input type="tel" id="phone" name="Phone" class="form-control" placeholder="Digite seu telefone" required />
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Senha</label>
+                <input type="password" id="password" name="Password" class="form-control" placeholder="Digite sua senha" required />
+            </div>
+            <button type="submit" class="btn btn-login">Entrar</button>
+        </form>
+        <div class="forgot-password">
+            <a href="#">Esqueceu sua senha?</a>
+        </div>
+    </div>
+</body>
