@@ -1,0 +1,58 @@
+﻿@model IEnumerable<petmypet.Models.TrabalhoPronto>
+
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-black">Galeria de Trabalhos</h1>
+        <a asp-action="Create" class="btn btn-success text-white" style="background-color: #A7D7C5; border-color: #A7D7C5;">
+            <i class="bi bi-plus-circle"></i> Novo Trabalho
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle" style="background-color: #FFFFFF;">
+            <thead style="background-color: #FF91C1; color: #FFFFFF;">
+                <tr>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Imagem</th>
+                    <th scope="col">Ativo</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-muted" style="color: #FF91C1;">
+                            Nenhum trabalho cadastrado.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Descricao</td>
+                            <td>
+                                <img src="@item.ImagemUrl" alt="Imagem do Trabalho" class="img-thumbnail" style="width: 100px; height: auto;">
+                            </td>
+                            <td class="text-center">
+                                <span class="badge @((item.Ativo ? "bg-success" : "bg-danger"))">
+                                    @(item.Ativo ? "Sim" : "Não")
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary" style="background-color: #A7D7C5; border-color: #A7D7C5;">
+                                    <i class="bi bi-pencil"></i> Editar
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-warning text-black" style="background-color: #FFE29A; border-color: #FFE29A;">
+                                    <i class="bi bi-trash"></i> Excluir
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

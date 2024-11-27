@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Administração";
+}
+
+<style>
+    .menu-item {
+        text-decoration: none; /* Remove o sublinhado */
+        color: inherit; /* Mantém a cor do texto padrão */
+        display: block;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+    }
+
+        .menu-item:hover {
+            transform: scale(1.1); /* Aumenta o tamanho em 10% */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adiciona sombra */
+        }
+
+    .menu-image {
+        width: 85px; /* Define a largura máxima */
+        height: 85px; /* Define a altura máxima */
+        object-fit: cover; /* Garante que a imagem se encaixe sem distorção */
+        border-radius: 8px; /* Cantos arredondados */
+        transition: transform 0.3s ease;
+    }
+
+
+    .menu-item:hover .menu-image {
+        transform: scale(1.15); /* Aumenta um pouco a imagem */
+    }
+
+    .menu-item p {
+        margin-top: 8px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+    .menu-item:hover p {
+        color: #007bff; /* Altera a cor do texto ao passar o mouse */
+    }
+
+</style>
+
+<div class="container text-center mt-5">
+    <h1 class="mb-4">Opções</h1>
+    <div class="row">
+        <div class="col-6 col-md-4 mb-3">
+            <a href="@Url.Action("Relatorios", "Home")" class="menu-item">
+                <img src="/images/agenda.png" alt="Relatórios" class="menu-image" />
+                <p class="mt-2">Agenda</p>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 mb-3">
+            <a href="@Url.Action("Index", "AdminTrabalhosProntos")" class="menu-item">
+                <img src="/images/galeria.png" alt="Galeria" class="menu-image" />
+                <p class="mt-2">Galeria</p>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 mb-3">
+            <a href="@Url.Action("Pets", "Home")" class="menu-item">
+                <img src="/images/pets.png" alt="Pets" class="menu-image" />
+                <p class="mt-2">Pets</p>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 mb-3">
+            <a href="@Url.Action("Servicos", "Home")" class="menu-item">
+                <img src="/images/servicos.png" alt="Serviços" class="menu-image" />
+                <p class="mt-2">Serviços</p>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 mb-3">
+            <a href="@Url.Action("Clientes", "Home")" class="menu-item">
+                <img src="/images/clientes.png" alt="Clientes" class="menu-image" />
+                <p class="mt-2">Clientes</p>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 mb-3">
+            <a href="@Url.Action("Relatorios", "Home")" class="menu-item">
+                <img src="/images/relatorios.png" alt="Relatórios" class="menu-image" />
+                <p class="mt-2">Relatórios</p>
+            </a>
+        </div>
+    </div>
+</div>

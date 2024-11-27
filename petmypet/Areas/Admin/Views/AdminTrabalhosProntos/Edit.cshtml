@@ -1,0 +1,107 @@
+﻿@model petmypet.Models.TrabalhoPronto
+
+<div class="container my-4">
+    <h1 class="text-black mb-4 text-center">Editar Trabalho</h1>
+
+    <form asp-action="Edit" enctype="multipart/form-data" method="post" class="p-4 rounded" style="background-color: #F5F5F5;">
+        <input type="hidden" asp-for="Id" />
+
+        <!-- Campo hidden para manter a URL da imagem atual -->
+        <input type="hidden" name="ImagemUrl" value="@Model.ImagemUrl" />
+
+
+        <!-- Descrição -->
+        <div class="mb-3">
+            <label asp-for="Descricao" class="form-label text-black">Descrição</label>
+            <input asp-for="Descricao" class="form-control" placeholder="Atualize a descrição do trabalho" />
+            <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+
+        <!-- Exibição da Imagem Cadastrada com Ícone de Edição -->
+        <div class="mb-3 d-flex justify-content-center align-items-center position-relative">
+            <div class="image-container position-relative" style="cursor: pointer; max-width: 100%; width: 300px;" onclick="triggerFileInput()">
+                <img src="@Model.ImagemUrl" alt="Imagem do Trabalho" id="previewImage" class="img-fluid rounded" style="width: 100%; max-width: 300px;" />
+                <div class="overlay position-absolute top-50 start-50 translate-middle text-white d-flex align-items-center justify-content-center">
+                    <i class="bi bi-pencil-fill" style="font-size: 2rem;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload de Nova Imagem -->
+        <div class="form-group mb-3">
+            <input type="file" id="imageInput" accept="image/*" class="form-control" style="display: none;" onchange="previewNewImage(event)" />
+        </div>
+
+        <!-- Checkbox Ativo -->
+        <div class="form-check mb-4">
+            <input asp-for="Ativo" type="checkbox" class="form-check-input" id="Ativo" />
+            <label asp-for="Ativo" class="form-check-label text-black" for="Ativo">Ativo</label>
+        </div>
+
+        <!-- Botões -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn text-white" style="background-color: #A7D7C5; border-color: #A7D7C5;">
+                <i class="bi bi-check-circle"></i> Salvar
+            </button>
+            <a asp-action="Index" class="btn text-black" style="background-color: #FFE29A; border-color: #FFE29A;">
+                <i class="bi bi-arrow-left"></i> Voltar
+            </a>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* CSS Geral */
+    .overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+        border-radius: 0.5rem;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .image-container:hover .overlay {
+        opacity: 1;
+    }
+
+    /* Responsividade para Centralização */
+    .image-container {
+        max-width: 300px;
+        width: 100%;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @@media (max-width: 768px) {
+        .overlay {
+            opacity: 1; /* Ícone sempre visível em telas menores */
+        }
+    }
+</style>
+
+<script>
+    // Função para simular clique no campo de upload
+    function triggerFileInput() {
+        document.getElementById('imageInput').click();
+    }
+
+    // Função para atualizar o preview da imagem ao selecionar um novo arquivo
+    function previewNewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('previewImage').src = e.target.result;
+
+                // Atualiza o valor do campo hidden com a nova imagem (Base64)
+                document.querySelector('input[name="ImagemUrl"]').value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+</script>

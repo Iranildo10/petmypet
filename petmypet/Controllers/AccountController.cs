@@ -23,8 +23,11 @@ namespace petmypet.Controllers
 
         public IActionResult Login(string returnUrl = null)
         {
-            // Defina o URL de retorno ou uma URL padrão (ex: página inicial)
-            returnUrl ??= Url.Content("~/");
+            // Normalize a returnUrl para a raiz se for equivalente a "/"
+            if (string.IsNullOrEmpty(returnUrl) || returnUrl == "/" || returnUrl == "/Account/Login?returnUrl=%2F")
+            {
+                returnUrl = Url.Content("~/");
+            }
 
             return View(new LoginViewModel
             {

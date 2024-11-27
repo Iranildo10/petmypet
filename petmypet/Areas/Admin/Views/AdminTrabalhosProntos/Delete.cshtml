@@ -1,0 +1,8 @@
+﻿@model petmypet.Models.TrabalhoPronto
+<h1>Excluir Trabalho</h1>
+<p>Tem certeza de que deseja excluir o trabalho "@Model.Descricao"?</p>
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Confirmar</button>
+    <a asp-action="Index">Cancelar</a>
+</form>

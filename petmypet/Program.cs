@@ -163,9 +163,9 @@ app.UseAuthorization();
 // Configuração customizada: Rotas
 // ============================================
 // Define as rotas personalizadas
-//app.MapControllerRoute(
-//    name: "areas",
-//    pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

@@ -14,6 +14,8 @@ namespace petmypet.Context
 
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Raca> Racas { get; set; }
+        public DbSet<TrabalhoPronto> TrabalhosProntos { get; set; }
         public DbSet<TipoAnimal> TiposAnimais { get; set; }
+        public DbSet<Servico> Servicos { get; set; }
     }
 }
