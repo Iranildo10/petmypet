@@ -17,5 +17,7 @@ namespace petmypet.Context
         public DbSet<TrabalhoPronto> TrabalhosProntos { get; set; }
         public DbSet<TipoAnimal> TiposAnimais { get; set; }
         public DbSet<Servico> Servicos { get; set; }
+        public DbSet<Agenda> Agendas { get; set; }
+        public DbSet<HorarioAgenda> HorariosAgendas { get; set; }
     }
 }

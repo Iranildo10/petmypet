@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using petmypet.Context;
 
@@ -11,9 +12,11 @@ using petmypet.Context;
 namespace petmypet.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241127204359_Tables_Agendas_HorariosAgendas")]
+    partial class Tables_Agendas_HorariosAgendas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,84 @@ namespace petmypet.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("Agenda", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("Dom")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<TimeSpan>("DuracaoHorario")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("FimIntervalo")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("HorarioFinal")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("HorarioInicial")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("InicioIntervalo")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<bool>("Qua")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("Qui")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("Sab")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("Seg")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("Sex")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("Ter")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Agendas");
+                });
+
+            modelBuilder.Entity("HorarioAgenda", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AgendaId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("Horario")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgendaId");
+
+                    b.ToTable("HorariosAgendas");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -185,63 +266,6 @@ namespace petmypet.Migrations
                     b.ToTable("Servicos");
                 });
 
-            modelBuilder.Entity("petmypet.Models.Agenda", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("Dom")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<int>("DuracaoHorario")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("FimIntervalo")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("HorarioFinal")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("HorarioInicial")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("InicioIntervalo")
-                        .HasColumnType("time");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<bool>("Qua")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("Qui")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("Sab")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("Seg")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("Sex")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("Ter")
-                        .HasColumnType("tinyint(1)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Agendas");
-                });
-
             modelBuilder.Entity("petmypet.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -319,27 +343,6 @@ namespace petmypet.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("petmypet.Models.HorarioAgenda", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AgendaId")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("Horario")
-                        .HasColumnType("time");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AgendaId");
-
-                    b.ToTable("HorariosAgendas");
                 });
 
             modelBuilder.Entity("petmypet.Models.Pet", b =>
@@ -467,6 +470,17 @@ namespace petmypet.Migrations
                     b.ToTable("TrabalhosProntos");
                 });
 
+            modelBuilder.Entity("HorarioAgenda", b =>
+                {
+                    b.HasOne("Agenda", "Agenda")
+                        .WithMany()
+                        .HasForeignKey("AgendaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Agenda");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -516,17 +530,6 @@ namespace petmypet.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("petmypet.Models.HorarioAgenda", b =>
-                {
-                    b.HasOne("petmypet.Models.Agenda", "Agenda")
-                        .WithMany()
-                        .HasForeignKey("AgendaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Agenda");
                 });
 
             modelBuilder.Entity("petmypet.Models.Pet", b =>

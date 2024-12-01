@@ -1,0 +1,119 @@
+﻿@model petmypet.Models.Agenda
+
+@{
+    ViewData["Title"] = "Criar Nova Agenda";
+}
+
+<div class="container my-4">
+    <div class="card shadow" style="background-color: #F5F5F5; border: none;">
+        <div class="card-header text-center" style="background-color: #FF91C1; color: #FFFFFF;">
+            <h2>Criar Nova Agenda</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <label asp-for="Nome" class="form-label" style="color: #000000;">Nome</label>
+                        <input asp-for="Nome" class="form-control" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input asp-for="Seg" type="checkbox" class="form-check-input" id="Seg">
+                            <label asp-for="Seg" class="form-check-label" for="Seg">Segunda-feira</label>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input asp-for="Ter" type="checkbox" class="form-check-input" id="Ter">
+                            <label asp-for="Ter" class="form-check-label" for="Ter">Terça-feira</label>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input asp-for="Qua" type="checkbox" class="form-check-input" id="Qua">
+                            <label asp-for="Qua" class="form-check-label" for="Qua">Quarta-feira</label>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input asp-for="Qui" type="checkbox" class="form-check-input" id="Qui">
+                            <label asp-for="Qui" class="form-check-label" for="Qui">Quinta-feira</label>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input asp-for="Sex" type="checkbox" class="form-check-input" id="Sex">
+                            <label asp-for="Sex" class="form-check-label" for="Sex">Sexta-feira</label>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input asp-for="Sab" type="checkbox" class="form-check-input" id="Sab">
+                            <label asp-for="Sab" class="form-check-label" for="Sab">Sábado</label>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="form-check">
+                            <input asp-for="Dom" type="checkbox" class="form-check-input" id="Dom">
+                            <label asp-for="Dom" class="form-check-label" for="Dom">Domingo</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3 mt-3">
+                    <div class="col-md-6">
+                        <label asp-for="HorarioInicial" class="form-label" style="color: #000000;">Horário Inicial</label>
+                        <input asp-for="HorarioInicial" type="time" class="form-control" />
+                        <span asp-validation-for="HorarioInicial" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="HorarioFinal" class="form-label" style="color: #000000;">Horário Final</label>
+                        <input asp-for="HorarioFinal" type="time" class="form-control" />
+                        <span asp-validation-for="HorarioFinal" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="DuracaoHorario" class="form-label" style="color: #000000;">Duração de cada Horário (Minutos)</label>
+                        <input asp-for="DuracaoHorario"
+                               type="text"
+                               class="form-control"
+                               inputmode="numeric"
+                               oninput="filterInput(this)" />
+                        <span asp-validation-for="DuracaoHorario" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="InicioIntervalo" class="form-label" style="color: #000000;">Início do Intervalo</label>
+                        <input asp-for="InicioIntervalo" type="time" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="FimIntervalo" class="form-label" style="color: #000000;">Fim do Intervalo</label>
+                        <input asp-for="FimIntervalo" type="time" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check mt-4">
+                            <input asp-for="Ativo" type="checkbox" class="form-check-input" id="Ativo">
+                            <label asp-for="Ativo" class="form-check-label" for="Ativo">Ativo</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <button type="submit" class="btn" style="background-color: #A7D7C5; color: #FFFFFF;">Salvar</button>
+                    <a asp-action="Index" class="btn" style="background-color: #FFE29A; color: #000000;">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function filterInput(input) {
+        // Remove caracteres que não sejam dígitos
+        input.value = input.value.replace(/[^\d]/g, '');
+    }
+</script>
+
+
