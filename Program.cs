@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using petmypet.Context;
 using petmypet.Models;
 using petmypet.Services;
-using ReflectionIT.Mvc.Paging;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -88,16 +87,6 @@ builder.Services.AddAuthorization(options =>
 // O método GetCarrinho retorna o carrinho de compras da sessão do usuário
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 //builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
-
-// ============================================
-// Configuração padrão: Habilitação de paginação
-// ============================================
-// Adiciona suporte para paginação, com estilo de paginação Bootstrap 4 e configura o nome do parâmetro da página
-builder.Services.AddPaging(options =>
-{
-    options.ViewName = "bootstrap4"; // Define o estilo de paginação
-    options.PageParameterName = "pageindex"; // Define o parâmetro da URL que indicará a página
-});
 
 // ============================================
 // Configuração customizada: Cache e Sessão

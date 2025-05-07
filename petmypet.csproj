@@ -17,9 +17,6 @@
     <None Remove="Areas\Admin\Models\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="Dockerfile" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
@@ -34,9 +31,9 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
-    <PackageReference Include="PagedList.Mvc" Version="4.5.0" />
+    
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
-    <PackageReference Include="ReflectionIT.Mvc.Paging" Version="8.0.0" />
+    
   </ItemGroup>
 
 </Project>

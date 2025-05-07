@@ -78,17 +78,9 @@
               "target": "Package",
               "version": "[8.0.7, )"
             },
-            "PagedList.Mvc": {
-              "target": "Package",
-              "version": "[4.5.0, )"
-            },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[8.0.2, )"
-            },
-            "ReflectionIT.Mvc.Paging": {
-              "target": "Package",
-              "version": "[8.0.0, )"
             }
           },
           "imports": [
