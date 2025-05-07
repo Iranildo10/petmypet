@@ -1,0 +1,206 @@
+﻿@model IEnumerable<Cliente>
+
+@{
+    ViewData["Title"] = "Lista de Clientes";
+}
+
+<style>
+    body {
+        background-color: #FF91C1;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container-clientes {
+        max-width: 1000px;
+        margin: 2rem auto;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+    }
+
+    h2 {
+        text-align: center;
+        color: #000000;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-novo {
+        background-color: #A7D7C5;
+        color: #000;
+        font-weight: bold;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: 0.3s;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+    }
+
+        .btn-novo:hover {
+            background-color: #8CCBB5;
+            text-decoration: none;
+        }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background-color: #FFE29A;
+    }
+
+    th, td {
+        padding: 0.75rem;
+        text-align: left;
+        border: 1px solid #ddd;
+        vertical-align: middle;
+    }
+
+    tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    .btn-sm {
+        margin: 2px 2px;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background-color: #5DADE2;
+        border: none;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #3498DB;
+        }
+
+    .btn-warning {
+        background-color: #F7DC6F;
+        border: none;
+        color: #000;
+    }
+
+        .btn-warning:hover {
+            background-color: #F4D03F;
+        }
+
+    .btn-danger {
+        background-color: #EC7063;
+        border: none;
+        color: white;
+    }
+
+        .btn-danger:hover {
+            background-color: #E74C3C;
+        }
+
+    @@media (max-width: 768px) {
+        .container-clientes
+
+    {
+        padding: 1rem;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 0.5rem;
+        background-color: #fff;
+    }
+
+    td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+    }
+
+        td::before {
+            position: absolute;
+            top: 0.75rem;
+            left: 1rem;
+            width: 45%;
+            padding-right: 1rem;
+            white-space: nowrap;
+            font-weight: bold;
+            color: #333;
+        }
+
+        td:nth-of-type(1)::before {
+            content: "Nome";
+        }
+
+        td:nth-of-type(2)::before {
+            content: "Telefone 1";
+        }
+
+        td:nth-of-type(3)::before {
+            content: "Telefone 2";
+        }
+
+        td:nth-of-type(4) {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding-left: 1rem;
+        }
+
+    .btn-sm {
+        width: 100%;
+        text-align: center;
+    }
+
+    }
+</style>
+
+<div class="container-clientes">
+    <h2>Clientes</h2>
+
+    <a class="btn-novo" asp-action="Create">+ Novo Cliente</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Telefone 1</th>
+                <th>Telefone 2</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Nome</td>
+                    <td>@item.Telefone1</td>
+                    <td>@item.Telefone2</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                        <a class="btn btn-warning btn-sm" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

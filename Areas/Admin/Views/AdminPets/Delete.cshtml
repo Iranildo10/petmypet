@@ -1,0 +1,97 @@
+﻿@model Pet
+
+@{
+    ViewData["Title"] = "Excluir Pet";
+}
+
+<style>
+    body {
+        background-color: #FF91C1;
+        font-family: Arial, sans-serif;
+    }
+
+    .delete-container {
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        padding: 2rem;
+        max-width: 600px;
+        margin: 2rem auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    h1 {
+        color: #000000;
+        margin-bottom: 1rem;
+    }
+
+    h3 {
+        color: #333;
+        margin-bottom: 2rem;
+    }
+
+    .detail-item {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+        .detail-item strong {
+            color: #000;
+        }
+
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn-action {
+        padding: 0.5rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        color: #000000;
+        text-decoration: none;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn-delete {
+        background-color: #F5A3A3;
+    }
+
+        .btn-delete:hover {
+            background-color: #e88080;
+        }
+
+    .btn-cancel {
+        background-color: #FFE29A;
+    }
+
+        .btn-cancel:hover {
+            background-color: #e6cb73;
+            text-decoration: none;
+        }
+</style>
+
+<div class="delete-container">
+    <h1>Excluir Pet</h1>
+    <h3>Tem certeza que deseja excluir este pet?</h3>
+
+    <div class="detail-item">
+        <strong>Nome:</strong> @Model.Nome
+    </div>
+
+    <div class="detail-item">
+        <strong>Cliente:</strong> @Model.Cliente?.Nome
+    </div>
+
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="Id" />
+        <div class="btn-group">
+            <button type="submit" class="btn-action btn-delete">Excluir</button>
+            <a asp-action="Index" class="btn-action btn-cancel">Cancelar</a>
+        </div>
+    </form>
+</div>

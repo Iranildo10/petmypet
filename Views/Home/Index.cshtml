@@ -1,0 +1,48 @@
+﻿@model IEnumerable<petmypet.Models.TrabalhoPronto>
+
+@{
+    ViewData["Title"] = "Pet My Pet";
+}
+
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+</style>
+
+<body style="background-color: #FF91C1">
+    <div class="container my-5" style="background-color: #FF91C1">
+
+        <div class="row g-4">
+            @foreach (var trabalho in Model)
+            {
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card shadow-sm" style="border: none; background-color: #FFFFFF; border-radius: 15px;">
+                        <!-- Imagem do Trabalho -->
+                        <div class="position-relative">
+                            <img src="@trabalho.ImagemUrl" alt="@trabalho.Descricao"
+                                 class="card-img-top rounded-top"
+                                 style="height: 250px; object-fit: cover; border-radius: 15px 15px 0 0;">
+                        </div>
+
+                        <!-- Descrição -->
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-black" style="font-weight: bold; font-size: 1.1rem;">@trabalho.Descricao</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+

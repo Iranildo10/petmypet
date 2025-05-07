@@ -1,0 +1,138 @@
+﻿@model Pet
+
+@{
+    ViewData["Title"] = "Cadastrar Pet";
+}
+
+<style>
+    body {
+        background-color: #FF91C1;
+        font-family: Arial, sans-serif;
+    }
+
+    .form-container {
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        padding: 2rem;
+        max-width: 600px;
+        margin: 2rem auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #000000;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        font-weight: bold;
+        color: #000000;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-bottom: 0.5rem;
+    }
+
+    input[type="checkbox"] {
+        margin-left: 0.5rem;
+        transform: scale(1.2);
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .checkbox-inline {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    span.field-validation-error {
+        color: red;
+        font-size: 0.9rem;
+    }
+
+    .btn-submit {
+        background-color: #A7D7C5;
+        color: #000000;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+        .btn-submit:hover {
+            background-color: #8CCBB5;
+        }
+
+    .btn-back {
+        display: block;
+        text-align: center;
+        color: #000000;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        background-color: #FFE29A;
+        border-radius: 6px;
+        transition: 0.3s;
+    }
+
+        .btn-back:hover {
+            background-color: #e6cb73;
+            text-decoration: none;
+        }
+
+    @@media (max-width: 576px) {
+        .form-container
+
+    {
+        padding: 1rem;
+    }
+
+    }
+</style>
+
+<div class="form-container">
+    <h1>Cadastrar Pet</h1>
+
+    <form asp-action="Create">
+        <div class="form-group">
+            <label asp-for="Nome"></label>
+            <input asp-for="Nome" />
+            <span asp-validation-for="Nome" class="field-validation-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ClienteId">Cliente</label>
+            <select asp-for="ClienteId" asp-items="ViewBag.ClienteId"></select>
+            <span asp-validation-for="ClienteId" class="field-validation-error"></span>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="Observacao"></label>
+            <textarea asp-for="Observacao" rows="3"></textarea>
+            <span asp-validation-for="Observacao" class="field-validation-error"></span>
+        </div>
+
+        <button type="submit" class="btn-submit">Salvar</button>
+    </form>
+
+    <a asp-action="Index" class="btn-back">Voltar à lista</a>
+</div>
+

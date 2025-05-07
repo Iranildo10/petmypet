@@ -1,0 +1,131 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Entrar";
+}
+
+<style>
+    body {
+        background-color: #FF91C1;
+        margin: 0;
+        padding: 0;
+    }
+
+    .login-container {
+        max-width: 400px;
+        margin: 5% auto;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+        .login-header img {
+            max-width: 150px; /* Ajusta o tamanho do logo */
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .login-header h1 {
+            font-size: 24px;
+            color: #000000;
+            margin: 0;
+        }
+
+    .form-label {
+        color: #000000;
+        font-weight: bold;
+    }
+
+    .form-control {
+        background-color: #F5F5F5;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    .btn-login {
+        background-color: #A7D7C5;
+        color: #FFFFFF;
+        font-weight: bold;
+        border: none;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-login:hover {
+            background-color: #8AC4B3;
+        }
+
+    .alert-warning {
+        background-color: #FFE29A;
+        color: #000000;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 15px;
+    }
+
+    .forgot-password {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+        .forgot-password a {
+            color: #000000;
+            text-decoration: none;
+        }
+
+            .forgot-password a:hover {
+                text-decoration: underline;
+            }
+
+</style>
+
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <!-- Adicionando o logo -->
+            <img src="~/images/logo.png" alt="Pet My Pet Logo" style="border-radius: 0.5rem">
+
+        </div>
+        <form asp-action="Login" method="post">
+            <!-- Campo oculto para returnUrl -->
+            <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+
+            <div class="mb-3">
+                <label asp-for="Phone" class="form-label">Número de Telefone</label>
+                <input asp-for="Phone" class="form-control" placeholder="Digite seu número de telefone" maxlength="11" oninput="mascaraTelefone(this)" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Senha</label>
+                <input asp-for="Password" class="form-control" placeholder="Digite sua senha" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-login">Entrar</button>
+        </form>
+        <div class="forgot-password">
+            <a asp-area="" asp-controller="Account" asp-action="Register" asp-route-returnUrl="@($"{Context.Request.Path}{Context.Request.QueryString}")">Criar uma conta</a>
+        </div>
+    </div>
+</body>
+
+<script>
+    // Função para aplicar a máscara de telefone
+    function mascaraTelefone(input) {
+        // Remove qualquer caractere não numérico
+        let valor = input.value.replace(/\D/g, '');
+        input.value = valor;
+      
+    }
+
+</script>

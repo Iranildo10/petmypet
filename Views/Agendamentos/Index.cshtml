@@ -1,0 +1,325 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Agenda do Dia";
+}
+
+<style>
+    .semana-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    }
+
+    .semana-card {
+    flex: 0 0 auto;
+    width: 140px;
+    }
+
+
+    body {
+    background-color: #FF91C1;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    }
+
+    .container-clientes {
+    max-width: 1000px;
+    margin: 2rem auto;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    }
+
+    h2 {
+    text-align: center;
+    color: #000000;
+    margin-bottom: 1.5rem;
+    }
+
+    .btn-novo {
+    background-color: #A7D7C5;
+    color: #000;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: 0.3s;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    }
+
+    .btn-agendamentos-fixos {
+    background-color: #FFE29A;
+    color: #000;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: 0.3s;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    }
+
+    .btn-novo:hover {
+    background-color: #8CCBB5;
+    text-decoration: none;
+    }
+
+    form {
+    margin-bottom: 1.5rem;
+    }
+
+    label {
+    font-weight: bold;
+    }
+
+    input[type="date"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    }
+
+    table {
+    width: 100%;
+    border-collapse: collapse;
+    }
+
+    thead {
+    background-color: #FFE29A;
+    }
+
+    th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border: 1px solid #ddd;
+    vertical-align: top;
+    }
+
+    tbody tr:hover {
+    background-color: #f9f9f9;
+    }
+
+    @@media (max-width: 768px) {
+
+    .container-clientes {
+    padding: 1rem;
+    }
+
+    table, thead, tbody, th, td, tr {
+    display: block;
+    width: 100%;
+    }
+
+    thead {
+    display: none;
+    }
+
+    tr {
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem;
+    background-color: #fff;
+    }
+
+    td {
+    border: none;
+    position: relative;
+    padding-left: 40%;
+    text-align: left;
+
+    }
+
+    td::before {
+    position: absolute;
+    top: 0.75rem;
+    left: 1rem;
+    width: 45%;
+    padding-right: 1rem;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #333;
+    }
+
+    td:nth-of-type(1)::before {
+    content: "Horário";
+    }
+
+    td:nth-of-type(2)::before {
+    content: "Pet";
+    }
+
+    td:nth-of-type(3)::before {
+    content: "Transporte";
+    }
+
+    
+    }
+
+    .btn-sm {
+    margin: 2px 2px;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    display: inline-block;
+    }
+
+    .btn-primary {
+    background-color: #5DADE2;
+    border: none;
+    color: white;
+    }
+
+    .btn-primary:hover {
+    background-color: #3498DB;
+    }
+
+    .btn-warning {
+    background-color: #F7DC6F;
+    border: none;
+    color: #000;
+    }
+
+    .btn-warning:hover {
+    background-color: #F4D03F;
+    }
+
+    .btn-danger {
+    background-color: #EC7063;
+    border: none;
+    color: white;
+    }
+
+    .btn-danger:hover {
+    background-color: #E74C3C;
+    }
+</style>
+
+
+<div class="container-clientes">
+    <h2>Agenda do Dia</h2>
+
+    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+        <a class="btn-novo" asp-action="Create">+ Novo Agendamento</a>
+        <a class="btn-agendamentos-fixos" asp-controller="AgendamentosFixos" asp-action="Index">Agendamentos Fixos</a>
+    </div>
+
+    <h4 class="text-center mb-4">Resumo da Semana (@ViewBag.SemanaInicio?.ToString("dd/MM") - @ViewBag.SemanaFim?.ToString("dd/MM"))</h4>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a asp-action="Index" asp-route-data="@((ViewBag.SemanaInicio as DateTime?)?.AddDays(-7).ToString("yyyy-MM-dd"))" class="btn btn-sm btn-secondary">&larr; Semana anterior</a>
+        <a asp-action="Index" asp-route-data="@((ViewBag.SemanaInicio as DateTime?)?.AddDays(7).ToString("yyyy-MM-dd"))" class="btn btn-sm btn-secondary">Próxima semana &rarr;</a>
+    </div>
+
+    <div class="semana-scroll mb-4">
+        @foreach (var dia in ViewBag.SemanaResumo)
+        {
+            <div class="semana-card">
+                <div class="card text-white text-center" style="background-color: #A7D7C5;">
+                    <div class="card-body p-2">
+                        <h6 class="mb-1">@dia.Data.ToString("ddd", new System.Globalization.CultureInfo("pt-BR"))</h6>
+                        <p class="mb-0" style="font-size: 0.9rem;">@dia.Data.ToString("dd/MM")</p>
+                        <span class="fw-bold">@dia.TotalAgendamentos agend.</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <form method="get">
+        <label for="data">Selecione uma data:</label>
+        <input type="date" id="data" name="data" value="@ViewBag.DataSelecionada" class="form-control" onchange="this.form.submit()" />
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Horário</th>
+                <th>Pet - Tutor</th>
+                <th>Transporte</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderBy(x => x.Horario.TimeOfDay))
+            {
+                <tr>
+                    <td>@item.Horario.ToString(@"HH\:mm")</td>
+                    <td>@item.Pet.Nome - @item.Pet.Cliente?.Nome</td>
+                    <td>
+                        @if (item.TaxiDog)
+                        {
+                            <span>TaxiDog</span>
+                        }
+                        @if (item.ClienteTraz)
+                        {
+                            <span>Cliente Traz</span>
+                        }
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">Ver Detalhes</button>
+                        @if (item.Tipo != "Fixo")
+                        {
+                            <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                            <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                        }
+                    </td>
+                </tr>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal-@item.Id" tabindex="-1" aria-labelledby="modalLabel-@item.Id" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="background-color: #FFFFFF; border-radius: 10px;">
+                            <div class="modal-header" style="background-color: #FF91C1; color: #000000;">
+                                <h5 class="modal-title" id="modalLabel-@item.Id">Detalhes do Agendamento</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                            </div>
+                            <div class="modal-body" style="color: #000000;">
+                                <p><strong>Horário:</strong> @item.Horario.ToString(@"HH\:mm")</p>
+                                <p><strong>Pet:</strong> @item.Pet.Nome</p>
+                                <p><strong>Tutor:</strong> @item.Pet.Cliente?.Nome</p>
+                                <p><strong>Serviços:</strong></p>
+                                <ul style="background-color: #F5F5F5; border-radius: 6px; padding: 10px;">
+                                    @foreach (var servico in item.Servicos)
+                                    {
+                                        <li>@servico.Descricao</li>
+                                    }
+                                </ul>
+                                <p><strong>Observação:</strong> @item.Observacao</p>
+                                <p><strong>Endereço:</strong> @item.EnderecoCliente</p>
+                                <p>
+                                    <strong>TaxiDog:</strong>
+                                    @(item.TaxiDog ? "Sim" : "Não")
+                                    @if (item.TaxiDog)
+                                    {
+                                        <br />
+                                        <a href="https://www.google.com/maps/search/?api=1&query=@Uri.EscapeDataString(item.EnderecoCliente)"
+                                           target="_blank"
+                                           class="btn btn-sm"
+                                           style="background-color: #A7D7C5; color: #000000; margin-top: 5px;">
+                                            Ver no Google Maps
+                                        </a>
+                                    }
+                                </p>
+                                <p><strong>Cliente Traz:</strong> @(item.ClienteTraz ? "Sim" : "Não")</p>
+                            </div>
+                            <div class="modal-footer" style="background-color: #F5F5F5;">
+                                <button type="button" class="btn btn-sm" data-bs-dismiss="modal" style="background-color: #FFE29A; color: #000000;">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </tbody>
+    </table>
+</div>

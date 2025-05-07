@@ -1,0 +1,15 @@
+﻿@model Servico
+@{
+    ViewData["Title"] = "Detalhes do Serviço";
+}
+
+<h2>Detalhes</h2>
+
+<div class="card p-3 mb-3">
+    <p><strong>Descrição:</strong> @Model.Descricao</p>
+    <p><strong>Valor:</strong> @Model.Valor.ToString("C")</p>
+    <p><strong>Ativo:</strong> @(Model.Ativo ? "Sim" : "Não")</p>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+<a asp-action="Index" class="btn btn-secondary">Voltar</a>

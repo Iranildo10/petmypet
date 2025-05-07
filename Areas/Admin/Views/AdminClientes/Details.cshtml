@@ -1,0 +1,102 @@
+﻿@model Cliente
+
+@{
+    ViewData["Title"] = "Detalhes do Cliente";
+}
+
+<style>
+    body {
+        background-color: #FF91C1;
+        font-family: Arial, sans-serif;
+    }
+
+    .details-container {
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        padding: 2rem;
+        max-width: 600px;
+        margin: 2rem auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #000000;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .detail-item {
+        margin-bottom: 1rem;
+    }
+
+        .detail-item strong {
+            display: inline-block;
+            width: 180px;
+            color: #000000;
+        }
+
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn-action {
+        text-decoration: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 6px;
+        background-color: #A7D7C5;
+        color: #000000;
+        transition: 0.3s;
+    }
+
+        .btn-action:hover {
+            background-color: #8CCBB5;
+            text-decoration: none;
+        }
+
+    .btn-back {
+        background-color: #FFE29A;
+    }
+
+        .btn-back:hover {
+            background-color: #e6cb73;
+        }
+
+    @@media (max-width: 576px) {
+        .detail-item strong {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+    }
+</style>
+
+<div class="details-container">
+    <h1>Detalhes do Cliente</h1>
+
+    <div class="detail-item">
+        <strong>Nome:</strong> @Model.Nome
+    </div>
+
+    <div class="detail-item">
+        <strong>Telefone 1:</strong> @Model.Telefone1
+    </div>
+
+    <div class="detail-item">
+        <strong>Telefone 2:</strong> @Model.Telefone2
+    </div>
+
+    <div class="detail-item">
+        <strong>Endereço 1:</strong> @Model.Endereco1
+    </div>
+
+    <div class="detail-item">
+        <strong>Endereço 2:</strong> @Model.Endereco2
+    </div>
+
+    <div class="btn-group">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-action">Editar</a>
+        <a asp-action="Index" class="btn-action btn-back">Voltar à lista</a>
+    </div>
+</div>

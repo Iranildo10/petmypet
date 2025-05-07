@@ -1,0 +1,24 @@
+﻿Paleta de Cores:
+Rosa Principal (do fundo da logo): #FF91C1
+
+Para o fundo do site ou elementos de destaque.
+Preto (texto da logo): #000000
+
+Para textos importantes ou elementos contrastantes.
+Branco: #FFFFFF
+
+Para fundos de seções ou áreas que precisam de leveza e contraste.
+Cinza Claro: #F5F5F5
+
+Para áreas de preenchimento suave, como cartões ou divisões.
+Verde Pastel: #A7D7C5
+
+Para botões de chamada, links ou mensagens positivas (como “Horário agendado com sucesso”).
+Amarelo Claro: #FFE29A
+
+Para elementos de atenção, como avisos ou destaques em promoções.
+Aplicação das Cores:
+Fundo principal: Rosa (#FF91C1) ou Branco (#FFFFFF), dependendo do contraste desejado.
+Botões e links: Verde Pastel (#A7D7C5) para ações positivas e Amarelo Claro (#FFE29A) para chamar atenção.
+Textos principais: Preto (#000000) para legibilidade.
+Textos secundários e detalhes: Cinza Claro (#F5F5F5) ou Branco (#FFFFFF).
