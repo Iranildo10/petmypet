@@ -1,0 +1,114 @@
+﻿@model List<BackupHistory>
+@{
+    ViewData["Title"] = "Gerenciar Backup";
+}
+
+<style>
+    body {
+        background-color: #FFFFFF;
+        color: #000000;
+        font-family: Arial, sans-serif;
+    }
+
+    h2, h3 {
+        color: #000000;
+    }
+
+    .container-custom {
+        background-color: #F5F5F5;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-primary {
+        background-color: #A7D7C5;
+        border-color: #A7D7C5;
+        color: #000000;
+    }
+
+        .btn-primary:hover {
+            background-color: #91c9b5;
+            border-color: #91c9b5;
+        }
+
+    .alert-success {
+        background-color: #A7D7C5;
+        color: #000000;
+        border: none;
+    }
+
+    .alert-danger {
+        background-color: #FFE29A;
+        color: #000000;
+        border: none;
+    }
+
+    table thead {
+        background-color: #FF91C1;
+        color: #FFFFFF;
+    }
+
+    table tbody tr:nth-child(odd) {
+        background-color: #FFFFFF;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #F5F5F5;
+    }
+</style>
+
+<div class="container-custom mt-4">
+    <h2>Backup do Banco de Dados</h2>
+
+    <form method="post" asp-action="CreateBackup">
+        <div class="form-group mt-3">
+            <label for="folderPath">Digite o caminho da pasta onde deseja salvar o backup</label>
+            <input type="text" name="folderPath" class="form-control" placeholder="Ex: C:\backups" required />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Realizar Backup</button>
+    </form>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success mt-3">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger mt-3">@TempData["Error"]</div>
+    }
+
+    <hr />
+
+    <h3 class="mt-4">Histórico de Backups</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Arquivo</th>
+                <th>Pasta</th>
+                <th>Tamanho</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.FileName</td>
+                        <td>@item.FolderPath</td>
+                        <td>@(item.FileSize / 1024) KB</td>
+                        <td>@item.BackupDate.ToString("g")</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center">Nenhum backup encontrado.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

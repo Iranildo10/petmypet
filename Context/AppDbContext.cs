@@ -23,6 +23,8 @@ namespace petmypet.Context
         public DbSet<AgendamentoFixoServico> AgendamentoFixoServicos { get; set; }
         public DbSet<AgendamentoFixoExcecao> AgendamentoFixoExcecoes { get; set; }
         public DbSet<PagamentoPacote> PagamentosPacotes { get; set; }
+        public DbSet<BackupHistory> BackupHistories { get; set; }
+
 
     }
 }

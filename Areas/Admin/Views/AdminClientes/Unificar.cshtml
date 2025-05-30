@@ -1,0 +1,106 @@
+﻿@model List<List<Cliente>>
+
+@{
+    ViewData["Title"] = "Clientes Duplicados";
+}
+
+<style>
+    body {
+        background-color: #FF91C1;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container-clientes {
+        max-width: 1000px;
+        margin: 2rem auto;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #000000;
+        margin-bottom: 1.5rem;
+    }
+
+    .grupo {
+        margin-bottom: 2rem;
+        padding: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #FAFAFA;
+    }
+
+        .grupo ul {
+            padding-left: 1rem;
+        }
+
+    .btn-unificar {
+        background-color: #5DADE2;
+        border: none;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+        .btn-unificar:hover {
+            background-color: #3498DB;
+        }
+
+    .no-duplicates {
+        text-align: center;
+        color: #000;
+    }
+
+    .pet-animation {
+        display: block;
+        margin: 1rem auto;
+        max-width: 200px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+</style>
+
+<div class="container-clientes">
+    <h2>Clientes Duplicados</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="no-duplicates">
+            <p>🎉 Nenhum cliente duplicado encontrado!</p>
+            
+        </div>
+    }
+
+    else
+    {
+        @foreach (var grupo in Model)
+        {
+            <div class="grupo">
+                <h5>Grupo de possíveis duplicados:</h5>
+                <ul>
+                    @foreach (var cliente in grupo)
+                    {
+                        <li>@cliente.Nome - @cliente.Telefone1</li>
+                    }
+                </ul>
+
+                <form method="post" asp-action="ConfirmarUnificacao">
+                    @foreach (var cliente in grupo)
+                    {
+                        <input type="hidden" name="clienteIds" value="@cliente.Id" />
+                    }
+                    <button type="submit" class="btn-unificar">Unificar este grupo</button>
+                </form>
+            </div>
+        }
+    }
+</div>

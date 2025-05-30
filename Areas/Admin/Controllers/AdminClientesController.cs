@@ -159,5 +159,94 @@ namespace petmypet.Areas.Admin.Controllers
         {
             return _context.Clientes.Any(e => e.Id == id);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Unificar()
+        {
+            var clientes = await _context.Clientes.ToListAsync();
+
+            var gruposDuplicados = clientes
+                .GroupBy(c => new
+                {
+                    Nome = RemoverAcentos(c.Nome.Trim().ToLowerInvariant()),
+                    Telefone = ApenasDigitos(c.Telefone1)
+                })
+                .Where(g => g.Count() > 1)
+                .Select(g => g.ToList())
+                .ToList();
+
+            return View(gruposDuplicados);
+        }
+
+        // Etapa 2: Mostrar confirmação
+        [HttpPost]
+        public async Task<IActionResult> ConfirmarUnificacao(List<int> clienteIds)
+        {
+            var clientes = await _context.Clientes
+                .Where(c => clienteIds.Contains(c.Id))
+                .Include(c => c.Pets)
+                .ToListAsync();
+
+            return View("ConfirmarUnificacao", clientes);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ExecutarUnificacao(int clientePrincipalId, List<int> clienteDuplicadoIds)
+        {
+            var clientePrincipal = await _context.Clientes.FindAsync(clientePrincipalId);
+            if (clientePrincipal == null)
+                return NotFound();
+
+            foreach (var id in clienteDuplicadoIds)
+            {
+                if (id == clientePrincipalId) continue;
+
+                var duplicado = await _context.Clientes
+                    .Include(c => c.Pets)
+                    .FirstOrDefaultAsync(c => c.Id == id);
+
+                if (duplicado?.Pets != null)
+                {
+                    foreach (var pet in duplicado.Pets)
+                    {
+                        pet.ClienteId = clientePrincipal.Id;
+                    }
+
+                    _context.Clientes.Remove(duplicado);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Unificar");
+        }
+
+
+        private static string RemoverAcentos(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                return texto;
+
+            var normalized = texto.Normalize(System.Text.NormalizationForm.FormD);
+            var sb = new System.Text.StringBuilder();
+
+            foreach (var ch in normalized)
+            {
+                var unicodeCategory = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(ch);
+                if (unicodeCategory != System.Globalization.UnicodeCategory.NonSpacingMark)
+                {
+                    sb.Append(ch);
+                }
+            }
+
+            return sb.ToString().Normalize(System.Text.NormalizationForm.FormC);
+        }
+
+        private static string ApenasDigitos(string texto)
+        {
+            return new string(texto?.Where(char.IsDigit).ToArray() ?? Array.Empty<char>());
+        }
+
+
+
     }
 }

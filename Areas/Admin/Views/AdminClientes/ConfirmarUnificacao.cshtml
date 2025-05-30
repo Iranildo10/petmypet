@@ -1,0 +1,25 @@
+﻿@model List<Cliente>
+
+<h2>Confirmar Unificação</h2>
+
+<p>Você está prestes a unificar os seguintes clientes:</p>
+
+<form asp-action="ExecutarUnificacao" method="post">
+    <div class="mb-3">
+        <label for="clientePrincipalId">Escolha o cliente principal:</label>
+        <select name="clientePrincipalId" class="form-control" required>
+            @foreach (var cliente in Model)
+            {
+                    <option value="@cliente.Id">@cliente.Id - @cliente.Nome</option>
+            }
+        </select>
+    </div>
+
+    @foreach (var cliente in Model)
+    {
+            <input type="hidden" name="clienteDuplicadoIds" value="@cliente.Id" />
+            <p><strong>ID:</strong> @cliente.Id - @cliente.Nome - Pets: @(cliente.Pets?.Count() ?? 0)</p>
+    }
+
+    <button type="submit" class="btn btn-danger">Confirmar Unificação</button>
+</form>

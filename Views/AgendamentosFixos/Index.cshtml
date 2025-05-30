@@ -154,24 +154,28 @@
             }
 
             td:nth-of-type(3)::before {
-                content: "Dia";
+                content: "Pago dia";
             }
 
             td:nth-of-type(4)::before {
+                content: "Dia";
+            }
+
+            td:nth-of-type(5)::before {
                 content: "Horário";
             }
 
            
 
-            td:nth-of-type(5)::before {
+            td:nth-of-type(6)::before {
                 content: "Transporte";
             }
 
-            td:nth-of-type(6)::before {
+            td:nth-of-type(7)::before {
                 content: "Servico(s)";
             }
 
-            td:nth-of-type(7)::before {
+            td:nth-of-type(8)::before {
                 content: "Valor";
             }
 
@@ -232,6 +236,7 @@
             <tr>
                 <th>Pet</th>
                 <th>Pagamento</th>
+                <th>Último Pagamento</th>
                 <th>Dia</th>
                 <th>Horário</th>
                 <th>Transporte</th>
@@ -271,6 +276,7 @@
                     <td>
                         <span style="color:@corStatus; font-weight:bold;">@status (Dia @item.DiaVencimentoPacote)</span> <!-- NOVO -->
                     </td>
+                    <td>@item.DataUltimoPagamento?.ToString("dd/MM/yyyy")</td>
                     <td>@item.DiaSemana.ParaPtBr()</td>
                     <td>@item.Horario.ToString(@"hh\:mm")</td>
                     
